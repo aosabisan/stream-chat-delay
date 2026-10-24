@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kick Delayed Chat Setup</title>
+<style>
+  :root {
+    --bg: #0f1210; --panel: #181d19; --line: #2a322c; --text: #eef2ee;
+    --muted: #9aa69c; --accent: #53fc18; --accent-ink: #0b0f0c; --warn: #ffcf5c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 16px/1.5 "Segoe UI", system-ui, Arial, sans-serif;
+  }
+  main { max-width: 760px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 28px; margin: 0 0 4px; }
+  .lead { color: var(--muted); margin: 0 0 28px; }
+  .step {
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 12px; padding: 20px; margin-bottom: 16px;
+  }
+  .step h2 { font-size: 18px; margin: 0 0 10px; display: flex; gap: 10px; align-items: center; }
+  .num {
+    background: var(--accent); color: var(--accent-ink); font-weight: 800;
+    width: 28px; height: 28px; border-radius: 50%; display: inline-grid; place-items: center;
+    font-size: 15px; flex: none;
+  }
+  label { display: block; font-weight: 600; margin: 12px 0 6px; }
+  input[type=text], input[type=number], select, textarea {
+    width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--line);
+    background: #0c0f0d; color: var(--text); font: inherit;
+  }
+  textarea { min-height: 70px; font-family: Consolas, monospace; font-size: 13px; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .row > * { flex: 1 1 180px; }
+  button {
+    background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 8px;
+    padding: 10px 16px; font: inherit; font-weight: 700; cursor: pointer; margin-top: 12px;
+  }
+  button.secondary { background: transparent; color: var(--text); border: 1px solid var(--line); }
+  .msg { margin-top: 10px; min-height: 1.5em; }
+  .ok { color: var(--accent); }
+  .bad { color: var(--warn); }
+  .hint { color: var(--muted); font-size: 14px; }
+  .hidden { display: none; }
+  code { background: #0c0f0d; padding: 1px 6px; border-radius: 4px; border: 1px solid var(--line); }
+  #url { font-family: Consolas, monospace; font-size: 13px; word-break: break-all; }
+  ol { padding-left: 20px; margin: 8px 0 0; }
+  li { margin-bottom: 6px; }
+  .check { display: flex; gap: 8px; align-items: center; margin-top: 12px; font-weight: 600; }
+  .preview {
+    margin-top: 12px; height: 260px; border-radius: 8px; border: 1px solid var(--line);
+    background: repeating-conic-gradient(#222 0% 25%, #2c2c2c 0% 50%) 0 0 / 24px 24px;
+    overflow: hidden;
+  }
+  .preview iframe { width: 100%; height: 100%; border: 0; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Kick Delayed Chat</h1>
+  <p class="lead">An on-stream chat box for Kick (plus Twitch and YouTube through Streamer.bot) that holds each message for a few seconds, so anything AutoMod or your mods delete never reaches your stream.</p>
+
+  <section class="step">
+    <h2><span class="num">1</span>Find your chatroom</h2>
+    <label for="channel">Your Kick channel name</label>
+    <div class="row">
+      <input id="channel" type="text" placeholder="e.g. the part after kick.com/" autocomplete="off">
+    </div>
+    <button id="findBtn">Find my chatroom</button>
+    <div id="findMsg" class="msg"></div>
+
+    <div id="manual" class="hidden">
+      <p class="hint">Kick didn't let this page look it up automatically. That's normal. Do this instead:</p>
+      <ol class="hint">
+        <li>Click <b>Open Kick lookup page</b>. A new tab opens full of text.</li>
+        <li>Press <b>Ctrl+A</b> then <b>Ctrl+C</b> in that tab to copy everything.</li>
+        <li>Come back here and paste it in the box below with <b>Ctrl+V</b>.</li>
+      </ol>
+      <button id="openLookup" class="secondary">Open Kick lookup page</button>
+      <label for="paste">Paste here</label>
+      <textarea id="paste" placeholder="Paste the whole page here (or just the chatroom number if you know it)"></textarea>
+    </div>
+    <label class="check"><input id="noKick" type="checkbox"> I don't stream on Kick (Twitch/YouTube only)</label>
+  </section>
+
+  <section class="step">
+    <h2><span class="num">+</span>Twitch &amp; YouTube chat (optional, needs Streamer.bot)</h2>
+    <p class="hint">If you use <b>Streamer.bot</b> and have it connected to Twitch and/or YouTube, those chats can show in the same box. They show right away (no delay needed), and anything deleted or anyone banned there is removed from the box too. Skip this if you only stream on Kick.</p>
+    <label class="check"><input id="useSb" type="checkbox" checked> Include Twitch &amp; YouTube chat from Streamer.bot</label>
+    <div id="sbSetup">
+      <ol class="hint">
+        <li>In Streamer.bot, open <b>Servers/Clients</b> → <b>WebSocket Server</b>.</li>
+        <li>Tick <b>Auto Start</b>, then click <b>Start Server</b>. Leave Address <code>127.0.0.1</code>, Port <code>8080</code>, Endpoint <code>/</code>.</li>
+        <li>Keep Streamer.bot open while you stream.</li>
+      </ol>
+      <div class="row">
+        <div>
+          <label for="sbport">Port (only change if you changed it in Streamer.bot)</label>
+          <input id="sbport" type="number" value="8080">
+        </div>
+        <div>
+          <label for="sbpass">Password (only if you turned on Authentication)</label>
+          <input id="sbpass" type="text" autocomplete="off" placeholder="leave empty if not">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="step">
+    <h2><span class="num">2</span>Choose your settings</h2>
+    <div class="row">
+      <div>
+        <label for="delay">Delay before Kick messages appear</label>
+        <select id="delay">
+          <option value="2">2 seconds</option>
+          <option value="3" selected>3 sec (recommended)</option>
+          <option value="5">5 seconds</option>
+          <option value="8">8 seconds</option>
+          <option value="12">12 sec (safest)</option>
+        </select>
+      </div>
+      <div>
+        <label for="fade">Messages disappear after</label>
+        <select id="fade">
+          <option value="0">Never (stay until pushed off)</option>
+          <option value="15">15 seconds</option>
+          <option value="30" selected>30 seconds</option>
+          <option value="60">1 minute</option>
+          <option value="120">2 minutes</option>
+        </select>
+      </div>
+      <div>
+        <label for="max">Messages on screen at once</label>
+        <input id="max" type="number" min="1" max="50" value="15">
+      </div>
+    </div>
+    <label class="check"><input id="hidecmds" type="checkbox"> Hide bot commands (messages starting with !)</label>
+    <p class="hint">A longer delay catches more slow AutoMod deletions, but Kick chat on screen runs further behind. Twitch and YouTube messages show right away, because those platforms already hold back flagged messages before anyone sees them.</p>
+    <div class="preview"><iframe id="preview" title="Preview"></iframe></div>
+    <p class="hint">Preview with fake chat. Every 4th message is a Kick message "deleted by AutoMod" and should never appear. The coloured dot shows the platform: green Kick, purple Twitch, red YouTube.</p>
+    <label class="check"><input id="dots" type="checkbox" checked> Show the coloured platform dot</label>
+  </section>
+
+  <section class="step">
+    <h2><span class="num">3</span>Add it to OBS</h2>
+    <div id="notReady" class="bad">Finish step 1 first (or tick "I don't stream on Kick").</div>
+    <div id="ready" class="hidden">
+      <p>Your OBS link:</p>
+      <p id="url"></p>
+      <button id="copyBtn">Copy link</button>
+      <span id="copyMsg" class="ok"></span>
+      <ol>
+        <li>In OBS, click <b>+</b> under <b>Sources</b> and choose <b>Browser</b>. Name it anything.</li>
+        <li>Make sure <b>Local file</b> is <b>unticked</b>.</li>
+        <li>Click in the <b>URL</b> box, delete what's there, and paste with <b>Ctrl+V</b>.</li>
+        <li>Set <b>Width</b> to 450 and <b>Height</b> to 700 (adjust to fit your layout), then click <b>OK</b>.</li>
+        <li>Type a message in your chat. It should appear a few seconds later.</li>
+      </ol>
+      <p class="hint">Don't move or rename this folder after setup. The link points to where it is right now. If you move it, open this page again and copy the new link.</p>
+    </div>
+  </section>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+let chatroomId = "";
+
+const overlayBase = new URL("kick-delayed-chat.html", location.href).href;
+
+function cleanName(v) {
+  return v.trim().replace(/^https?:\/\/(www\.)?kick\.com\//i, "").replace(/[\/?#].*$/, "").toLowerCase();
+}
+
+function setChatroom(id) {
+  chatroomId = String(id);
+  $("findMsg").className = "msg ok";
+  $("findMsg").textContent = "Found it! Chatroom number: " + chatroomId;
+  $("manual").classList.add("hidden");
+  update();
+}
+
+function extractId(text) {
+  const t = text.trim();
+  if (/^\d+$/.test(t)) return t;
+  try {
+    const j = JSON.parse(t);
+    if (j && j.chatroom && j.chatroom.id) return String(j.chatroom.id);
+  } catch (e) {}
+  const m = t.match(/"chatroom"\s*:\s*\{[^{}]*?"id"\s*:\s*(\d+)/);
+  return m ? m[1] : "";
+}
+
+$("findBtn").onclick = async () => {
+  const name = cleanName($("channel").value);
+  if (!name) {
+    $("findMsg").className = "msg bad";
+    $("findMsg").textContent = "Type your channel name first.";
+    return;
+  }
+  $("findMsg").className = "msg";
+  $("findMsg").textContent = "Looking it up...";
+  try {
+    const res = await fetch("https://kick.com/api/v2/channels/" + encodeURIComponent(name));
+    if (!res.ok) throw new Error();
+    const j = await res.json();
+    if (j && j.chatroom && j.chatroom.id) { setChatroom(j.chatroom.id); return; }
+    throw new Error();
+  } catch (e) {
+    $("findMsg").className = "msg bad";
+    $("findMsg").textContent = "Couldn't look it up automatically. Follow the steps below.";
+    $("manual").classList.remove("hidden");
+  }
+};
+
+$("channel").addEventListener("keydown", e => { if (e.key === "Enter") $("findBtn").click(); });
+
+$("openLookup").onclick = () => {
+  const name = cleanName($("channel").value);
+  if (!name) { $("channel").focus(); return; }
+  window.open("https://kick.com/api/v2/channels/" + encodeURIComponent(name), "_blank");
+};
+
+$("paste").addEventListener("input", () => {
+  const id = extractId($("paste").value);
+  if (id) setChatroom(id);
+  else if ($("paste").value.trim()) {
+    $("findMsg").className = "msg bad";
+    $("findMsg").textContent = "Couldn't find the chatroom number in that text. Make sure you copied the whole page.";
+  }
+});
+
+// Settings that change how chat looks (also used for the preview).
+function lookQuery() {
+  let q = "delay=" + $("delay").value;
+  if ($("fade").value !== "0") q += "&fade=" + $("fade").value;
+  const max = parseInt($("max").value, 10);
+  if (max && max !== 15) q += "&max=" + max;
+  if ($("hidecmds").checked) q += "&hidecmds=1";
+  if (!$("dots").checked) q += "&dots=0";
+  return q;
+}
+
+// Settings that say where chat comes from.
+function sourceQuery() {
+  const parts = [];
+  if (!$("noKick").checked && chatroomId) parts.push("chatroom=" + chatroomId);
+  if (!$("useSb").checked) parts.push("sb=0");
+  else {
+    const port = parseInt($("sbport").value, 10);
+    if (port && port !== 8080) parts.push("sbport=" + port);
+    const pass = $("sbpass").value;
+    if (pass) parts.push("sbpass=" + encodeURIComponent(pass));
+  }
+  return parts.join("&");
+}
+
+function update() {
+  const look = lookQuery();
+  const want = overlayBase + "?test=1&" + look;
+  if ($("preview").dataset.src !== want) {
+    $("preview").dataset.src = want;
+    $("preview").src = want;
+  }
+  $("sbSetup").classList.toggle("hidden", !$("useSb").checked);
+
+  const kickReady = $("noKick").checked || !!chatroomId;
+  const anySource = (!$("noKick").checked && chatroomId) || $("useSb").checked;
+  if (!kickReady || !anySource) {
+    $("notReady").textContent = !kickReady
+      ? 'Finish step 1 first (or tick "I don\'t stream on Kick").'
+      : "Pick at least one chat: Kick, or Twitch & YouTube through Streamer.bot.";
+    $("notReady").classList.remove("hidden");
+    $("ready").classList.add("hidden");
+    return;
+  }
+  $("notReady").classList.add("hidden");
+  $("ready").classList.remove("hidden");
+  const src = sourceQuery();
+  $("url").textContent = overlayBase + "?" + (src ? src + "&" : "") + look;
+}
+
+["delay", "fade", "max", "hidecmds", "dots", "noKick", "useSb", "sbport", "sbpass"]
+  .forEach(id => $(id).addEventListener("input", update));
+
+$("copyBtn").onclick = async () => {
+  const text = $("url").textContent;
+  try { await navigator.clipboard.writeText(text); }
+  catch (e) {
+    const r = document.createRange(); r.selectNodeContents($("url"));
+    const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+    document.execCommand("copy");
+  }
+  $("copyMsg").textContent = "  Copied!";
+  setTimeout(() => $("copyMsg").textContent = "", 2000);
+};
+
+update();
+</script>
+</body>
+</html>
