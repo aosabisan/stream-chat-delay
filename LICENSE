@@ -1,21 +1,108 @@
-MIT License
+Stream Chat Delay License
 
-Copyright (c) 2026 Aosabi
+Copyright (c) 2026 Aosabi (https://github.com/aosabisan)
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+The person who made this software ("the author") keeps the copyright. You get
+the permissions below, as long as you follow the conditions.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+1. USING IT
+
+   You may download, install and use this software for free, on any stream,
+   personal or commercial. Just using it does not require any credit, and
+   money you earn from your own streams while using it (such as
+   subscriptions, donations, ads or sponsorships) is not subject to the
+   royalty in section 4.
+
+
+2. CHANGING IT FOR YOURSELF
+
+   You may change the software for your own use. If you keep your changed
+   copy to yourself and do not share it, no credit is required.
+
+
+3. SHARING IT OR BUILDING ON IT: CREDIT REQUIRED
+
+   You must give credit to the author if you do any of these things, whether
+   the software is changed or unchanged, in whole or in part, free or paid:
+
+   - share, upload, publish, sell, sublicense or otherwise give it to others;
+   - repackage it, or include any part of it in another project, product,
+     package, overlay, widget, tool or service;
+   - make something based on it or derived from it, including anything made
+     by studying, copying, translating, decompiling or reverse engineering it.
+
+   To give credit, you must do all of the following:
+
+   a. Keep this license file, including the copyright line above, in every
+      copy you share.
+
+   b. Show this credit where people who get or use your work can easily see
+      it, such as the README, the download or store page, or an "about" or
+      "credits" section:
+
+         Based on Stream Chat Delay by Aosabi
+         https://github.com/aosabisan/stream-chat-delay
+
+   c. Say whether you changed anything.
+
+   You may not remove or hide the credit, or present the work as entirely
+   your own.
+
+
+4. SELLING IT: 50% ROYALTY
+
+   If you sell, license, rent, or charge money for anything that includes
+   this software or any part of it, or that is based on or derived from it,
+   you must pay the author a royalty of 50% (fifty percent) of the gross
+   revenue you receive from it. This applies no matter how much you changed,
+   how small a part you used, or what else it is combined with. "Gross
+   revenue" means all money and other payment received, before any costs,
+   fees, taxes or other deductions. Examples include selling it on its own,
+   in an overlay or widget pack, as part of a paid product or service, or
+   behind a paywall, subscription or paid download.
+
+   You must also:
+
+   a. Contact the author through the GitHub page above before your first
+      sale, to arrange how payments will be made.
+
+   b. Pay the royalty within 30 days after the end of each calendar
+      quarter (March, June, September and December), together with a
+      written statement showing the revenue for that quarter.
+
+   c. Keep accurate records of that revenue for at least two years, and
+      show them to the author on request.
+
+   Selling without paying the royalty, or without the credit in section 3,
+   is not permitted.
+
+
+5. NO ENDORSEMENT
+
+   You may not use the author's name to suggest that the author made,
+   supports or approves your version or your project.
+
+
+6. IF YOU BREAK THESE TERMS
+
+   If you do not follow these conditions, your permission to use, change and
+   share the software ends. Ending your permission does not cancel any
+   royalties you already owe.
+
+
+7. OTHER SERVICES
+
+   This software connects to services run by others, such as Kick and
+   Streamer.bot. This license covers only this software, not those services.
+   Using them is subject to their own terms.
+
+
+8. NO WARRANTY
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+   ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+   CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

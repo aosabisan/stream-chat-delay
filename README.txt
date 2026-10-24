@@ -1,5 +1,5 @@
-KICK DELAYED CHAT
-=================
+STREAM CHAT DELAY (Kick Delayed Chat)
+=====================================
 
 An on-stream chat box for Kick that holds every message for a few seconds
 before showing it. If AutoMod or a moderator deletes the message during that
@@ -18,12 +18,15 @@ This fixes that.
 INSTALL (about 2 minutes)
 -------------------------
 
-1. Unzip this folder and put it somewhere it can stay, like your Documents
+1. Download it. On the GitHub page, click the green "Code" button, then
+   "Download ZIP".
+
+2. Unzip it and put the folder somewhere it can stay, like your Documents
    folder. (Don't run it from inside the zip file.)
 
-2. Double-click SETUP.html. It opens in your web browser.
+3. Double-click SETUP.html. It opens in your web browser.
 
-3. Follow the steps on that page:
+4. Follow the steps on that page:
      - Type your Kick channel name and click "Find my chatroom".
        (No Kick? Tick "I don't stream on Kick".)
      - Optional: turn on Twitch & YouTube through Streamer.bot.
@@ -49,6 +52,12 @@ Kick chat always comes straight from Kick, not through Streamer.bot,
 because only Kick's own connection reports when AutoMod deletes a message.
 So you won't see Kick messages twice.
 
+If Streamer.bot is also connected to your Kick account, Kick messages get
+the chatter's profile picture and badge images too. Without it, Kick badges
+show as small text labels instead. YouTube messages show profile pictures.
+Twitch messages show badge images (Twitch profile pictures aren't included
+in Streamer.bot's chat messages).
+
 
 GOOD TO KNOW
 ------------
@@ -61,8 +70,8 @@ GOOD TO KNOW
   be extra safe. The trade-off is that on-screen chat runs further behind.
 
 - Want to see it without going live? Add &test=1 to the end of the link in
-  OBS. Fake messages appear, and every 4th one (a Kick message) gets "deleted" and should
-  never show.
+  OBS. Fake messages appear, and every 4th one (a Kick message) gets
+  "deleted" and should never show.
 
 - The coloured dot before each name shows where it came from: green is
   Kick, purple is Twitch, red is YouTube.
@@ -101,3 +110,20 @@ NOTE
 
 This uses the same live chat connection Kick's own website uses. It isn't
 an official Kick feature, so a future Kick update could affect it.
+
+
+LICENSE AND CREDIT
+------------------
+
+Free to use on any stream. If you share, repackage, change and share, or
+build on this in any way, you must credit the author where people can see
+it:
+
+    Based on Stream Chat Delay by Aosabi
+    https://github.com/aosabisan/stream-chat-delay
+
+Selling it, or anything that includes or is based on it, requires paying
+the author a royalty of 50% of the gross revenue from it. Using it on your
+own monetized streams does not.
+
+See the LICENSE file for the full terms.
